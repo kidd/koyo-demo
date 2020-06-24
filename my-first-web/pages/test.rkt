@@ -9,7 +9,11 @@
 
 (provide test1-page)
 
-(define/contract (test1-page req)
+(define/contract (test0-page req)
+  (-> request? response?)
+  (page (haml (:div (:h1 "hola")))))
+
+(define/contract (test00-page req)
   (-> request? response?)
   (send/suspend
    (lambda (x)
@@ -19,3 +23,27 @@
                     "enter a number"
                     (input ([name "number"]))
                     (input ([type "submit"])))))))))
+
+(define/contract (test1-page req)
+  (-> request? response?)
+  (count-dot-com 0))
+
+(define (count-dot-com i)
+  (count-dot-com
+   (send/suspend/dispatch
+    (lambda (embed/url)
+      (response/xexpr
+       `(html
+         (head (title "Count!"))
+         (body
+          (h2 (a ([href
+                   ,(embed/url
+                     (lambda (req)
+                       (sub1 i)))])
+                 "-"))
+          (h1 ,(number->string i))
+          (h2 (a ([href
+                   ,(embed/url
+                     (lambda (req)
+                       (add1 i)))])
+                 "+")))))))))
