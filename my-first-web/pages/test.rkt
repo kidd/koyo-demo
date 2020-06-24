@@ -11,4 +11,11 @@
 
 (define/contract (test1-page req)
   (-> request? response?)
-  (page (haml (:div (:h1 "hola")))))
+  (send/suspend
+   (lambda (x)
+     (page (haml
+            (:div
+             `(form ([action ,x])
+                    "enter a number"
+                    (input ([name "number"]))
+                    (input ([type "submit"])))))))))
