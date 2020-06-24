@@ -1,0 +1,6 @@
+* Koyo
+** create migrations with north
+** set a postgresql db
+   docker run -e POSTGRES_PASSWORD=my_first_web -e POSTGRES_USER=my_first_web -e POSTGRES_DB=my_first_web -p 5432:5432 -ti --rm postgres
+** forms use continutations
+** the code recompiles and restarts automatically on every change, but it is slow af

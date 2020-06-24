@@ -59,6 +59,8 @@
      [("")
       #:roles (user)
       dashboard-page]
+     [("test1")
+      test1-page]
 
      [("login")
       (login-page auth)]
