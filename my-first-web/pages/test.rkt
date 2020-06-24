@@ -29,21 +29,20 @@
   (count-dot-com 0))
 
 (define (count-dot-com i)
-  (count-dot-com
-   (send/suspend/dispatch
-    (lambda (embed/url)
-      (response/xexpr
-       `(html
-         (head (title "Count!"))
-         (body
-          (h2 (a ([href
-                   ,(embed/url
-                     (lambda (req)
-                       (sub1 i)))])
-                 "-"))
-          (h1 ,(number->string i))
-          (h2 (a ([href
-                   ,(embed/url
-                     (lambda (req)
-                       (add1 i)))])
-                 "+")))))))))
+  (send/suspend/dispatch
+   (lambda (embed/url)
+     (response/xexpr
+      `(html
+        (head (title "Count!"))
+        (body
+         (h2 (a ([href
+                  ,(embed/url
+                    (lambda (req)
+                      (count-dot-com (sub1 i))))])
+                "-"))
+         (h1 ,(number->string i))
+         (h2 (a ([href
+                  ,(embed/url
+                    (lambda (req)
+                      (count-dot-com (add1 i))))])
+                "+"))))))))
